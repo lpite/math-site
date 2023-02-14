@@ -52,6 +52,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  
 }
 .next_question_block{
   padding: 45px 0;

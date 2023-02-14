@@ -5,14 +5,51 @@ import shuffleArray from "../utils/shuffleArray";
 const ANSWERS_COUNT = 4;
 
 function generateQuestion() {
-	const firstNumber = random(1, 100);
-	const secondNumber = random(1, 100)
-	const answer = firstNumber +
-		secondNumber
+	const questionType = random(1, 4).toString();
+	console.log(questionType)
+	if (questionType === "1") {
+		const firstNumber = random(1, 100);
+		const secondNumber = random(1, 100)
+		const answer = firstNumber +
+			secondNumber
+		return {
+			answer: answer,
+			questionText: `${firstNumber}+${secondNumber}=`,
+		};
+	}
+	if (questionType === "2") {
+		const firstNumber = random(1, 100);
+		const secondNumber = random(1, 100)
+		const answer = secondNumber
+		return {
+			answer: answer,
+			questionText: `${firstNumber + secondNumber}-${firstNumber}=`,
+		};
+	}
+	if (questionType === "3") {
+		const firstNumber = random(1, 15);
+		const secondNumber = random(1, 15)
+		const answer = firstNumber * secondNumber
+		return {
+			answer: answer,
+			questionText: `${firstNumber}*${secondNumber}=`,
+		};
+	}
+	if (questionType === "4") {
+		const firstNumber = random(1, 15);
+		const secondNumber = random(1, 15)
+		const answer = (firstNumber * secondNumber) / firstNumber
+		return {
+			answer: answer,
+			questionText: `${firstNumber * secondNumber}/${firstNumber}=`,
+		};
+
+	}
 	return {
-		answer: answer,
-		questionText: `${firstNumber}+${secondNumber}=`,
+		answer: 0,
+		questionText: ``,
 	};
+	
 }
 
 function generateWrongAnswers(answer: number) {
@@ -38,9 +75,10 @@ export default function Question() {
 	const [selectedAnswer, setSelectedAnswer] = createSignal(0);
 	function answerQuestion() {
 		if (selectedAnswer() === question().answer) {
+
 			alert("uhu")
 		} else {
-			alert("noup")
+			alert("no")
 		}
 		setQuestion(generateQuestion())
 		setSelectedAnswer(0)
