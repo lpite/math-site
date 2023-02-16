@@ -1,6 +1,10 @@
-import { createSignal, For } from "solid-js";
+import { createEffect, createSignal, For } from "solid-js";
 import { random } from "../utils/random";
 import shuffleArray from "../utils/shuffleArray";
+
+import {
+	useNotification
+} from "../stores/notificationStore"
 
 const ANSWERS_COUNT = 4;
 
@@ -72,22 +76,34 @@ function generateWrongAnswers(answer: number) {
 }
 export default function Question() {
 	const [question, setQuestion] = createSignal(generateQuestion());
-	const [selectedAnswer, setSelectedAnswer] = createSignal(0);
+	const [selectedAnswer, setSelectedAnswer] = createSignal<number | null>(null);
+
+	const notification = useNotification()
+
 	function answerQuestion() {
 		if (selectedAnswer() === question().answer) {
-
-			alert("uhu")
+			notification.setText("yep")
 		} else {
-			alert("no")
+			notification.setText("noup")
 		}
+		notification.showNotification()
+
 		setQuestion(generateQuestion())
-		setSelectedAnswer(0)
+		setSelectedAnswer(null)
 	}
 	function selectAnswer(answer: number) {
 		setSelectedAnswer(answer)
+		notification.hideNotification()
 	}
+
+	createEffect(() => {
+		if (notification.status === "open") {
+			setTimeout(() => notification.hideNotification(), 1000)
+		}
+	})
 	return (
 		<>
+
 			<div class="question_block">
 				<span class="question_block__question_text">
 					{question().questionText}
@@ -99,7 +115,7 @@ export default function Question() {
 						<>
 							<label class="answers_block__answer" 
 								onClick={() => selectAnswer(answer)}>
-								<input type="radio" name="answer" />
+								<input type="radio" name="answer" checked={answer === selectedAnswer()} />
 								{answer}
 							</label>
 							
