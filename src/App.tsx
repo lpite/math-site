@@ -8,7 +8,6 @@ const App: Component = () => {
   return (
     <main class="question_page">
       <Notification />
-
       <Question />
     </main>
   );
