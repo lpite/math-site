@@ -1,0 +1,22 @@
+.question_block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  height: 100%;
+  font-size: 24pt;
+}
+
+.question_block__operand {
+  font-size: 36pt;
+  font-weight: bold;
+  padding: 0 20px;
+}
+
+.question_block__sign {
+  font-size: 42pt;
+  font-weight: bold;
+
+  color: red;
+  text-align: center;
+}
